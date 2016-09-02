@@ -43,6 +43,27 @@ ggplot(data=dados, aes(x=factor(dados[[4]])))+geom_bar()+
                             "Superior comp.", "Pós-graduação"))
 
 freq(dados[[5]]) #bairros
+#=========================
+dados[[5]] = as.character(dados[[5]])
+dados[[5]][dados[[5]]=="centro"] = "Centro"
+dados[[5]][dados[[5]]=="leticia"] = "Letícia"
+dados[[5]][dados[[5]]=="Maria Goreth"] = "Maria Goretti"
+dados[[5]][dados[[5]]=="Maria Helena Venda Nova"] = "Venda Nova"
+dados[[5]][dados[[5]]=="minaslandia"] = "Minaslândia"
+dados[[5]][dados[[5]]=="pedro leopoldo/centro"] = "Pedro Leopoldo"
+dados[[5]][dados[[5]]=="Planalto - BH"] = "Planalto"
+dados[[5]][dados[[5]]=="sagrada familia"] = "Sagrada Família"
+dados[[5]][dados[[5]]=="Sagrada Familia"] = "Sagrada Família"
+dados[[5]][dados[[5]]=="SAGRADA FAMILIA"] = "Sagrada Família"
+dados[[5]][dados[[5]]=="Sagrada Família "] = "Sagrada Família"
+dados[[5]][dados[[5]]=="Santa Monica"] = "Santa Mônica"
+dados[[5]][dados[[5]]=="São Benedito "] = "São Benedito"
+dados[[5]][dados[[5]]=="São Benedito"] = "São Benedito"
+dados[[5]][dados[[5]]=="sion"] = "Sion"
+dados[[5]][dados[[5]]=="boaa vist"] = "Boa Vista"
+dados[[5]] = factor(dados[[5]])
+freq(dados[[5]])
+#==================================
 
 
 freq(dados[[6]]) #profissão
