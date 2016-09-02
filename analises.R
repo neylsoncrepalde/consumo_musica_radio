@@ -1,8 +1,6 @@
-#TCC Aírton Cruz
-#Orientador: Neylson Crepalde
-#Análises
-
-#É preciso compactar as respostas parecidas
+# Artigo O Consumo de Música e o Rádio
+# Aírton Gonçalves e Neylson Crepalde
+# Script: Neylson Crepalde
 
 library(foreign)
 library(descr)
@@ -21,20 +19,16 @@ cv.test = function(x,y) {
   return(as.numeric(CV))
 }
 ###################################
-
-getwd()
-dados = read.table("~/Documentos/Neylson Crepalde/Izabela Hendrix/TCCs/dados_airton.csv",
-                   sep=";", header=T, na="NA", stringsAsFactors = F, fileEncoding = "Latin1")
-head(dados)
-names(dados)
-View(dados)
+dados = read.table("dados_airton.csv",sep=";", header=T, na="NA", 
+                    stringsAsFactors = F, fileEncoding = "Latin1")
+#head(dados)
+#names(dados)
+#View(dados)
 
 dados$Sexo <- factor(dados$Sexo,
                      levels = c(0,1),
                      labels = c("Feminino", "Masculino"))
 freq(dados$Sexo)
-
-ggplot(data=dados, aes(x=Sexo))+geom_histogram()+labs(title="Sexo", x="", y="")
 
 idade = summary(dados[2])
 
@@ -43,10 +37,10 @@ dados$Escolaridade <- factor(dados$Escolaridade,
                              labels = c("Ensino Médio incompleto", "Ensino Médio completo", 
                                         "Superior incompleto", "Superior completo", "Pós-graduação"))
 freq(dados[[4]])
-ggplot(data=dados, aes(x=factor(dados[[4]])))+geom_histogram()+
+ggplot(data=dados, aes(x=factor(dados[[4]])))+geom_bar()+
   labs(title="Escolaridade", y="", x="")+
   scale_x_discrete(labels=c("EM inc.", "EM completo", "Superior inc.",
-                            "Superior comp.", "Pós-graduação")) #+facet_wrap(~Sexo)
+                            "Superior comp.", "Pós-graduação"))
 
 freq(dados[[5]]) #bairros
 
@@ -259,7 +253,8 @@ valores <- c(58,39,16,8,16,1,2,2,2,1)
 finalidade = rbind(motivos, valores)
 finalidade = cbind(motivos, valores)
 finalidade = as.data.frame(finalidade)
-ggplot(data=finalidade, aes(y=valores, x=c(1:10)))+geom_bar()
+ggplot(data=finalidade, aes(x=motivos, y=valores))+
+  geom_bar(stat="identity")+coord_flip()
 
 
 freq(ouvem.radio[[15]]) #voce acompanha algum programa
@@ -312,48 +307,9 @@ ouvem.radio[[16]] = factor(ouvem.radio[[16]])
 freq(ouvem.radio[[16]])
 #========================================================
 
-
-
-
-library(ca)
-tabela.ca = table(dados[[5]],dados[[12]])
-ca(tabela.ca)
-
-library(ggplot2)
-ggplot(data=dados, aes(x=factor(Sexo), y=Qual.é.a.sua.idade.))+geom_boxplot()
-
-
-################## Preparando os dados
-################## Agrupando as variáveis iguais
-
-
-dados[[5]] = as.character(dados[[5]])
-dados[[5]][dados[[5]]=="centro"] = "Centro"
-dados[[5]][dados[[5]]=="leticia"] = "Letícia"
-dados[[5]][dados[[5]]=="Maria Goreth"] = "Maria Goretti"
-dados[[5]][dados[[5]]=="Maria Helena Venda Nova"] = "Venda Nova"
-dados[[5]][dados[[5]]=="minaslandia"] = "Minaslândia"
-dados[[5]][dados[[5]]=="pedro leopoldo/centro"] = "Pedro Leopoldo"
-dados[[5]][dados[[5]]=="Planalto - BH"] = "Planalto"
-dados[[5]][dados[[5]]=="sagrada familia"] = "Sagrada Família"
-dados[[5]][dados[[5]]=="Sagrada Familia"] = "Sagrada Família"
-dados[[5]][dados[[5]]=="SAGRADA FAMILIA"] = "Sagrada Família"
-dados[[5]][dados[[5]]=="Sagrada Família "] = "Sagrada Família"
-dados[[5]][dados[[5]]=="Santa Monica"] = "Santa Mônica"
-dados[[5]][dados[[5]]=="São Benedito "] = "São Benedito"
-dados[[5]][dados[[5]]=="São Benedito"] = "São Benedito"
-dados[[5]][dados[[5]]=="sion"] = "Sion"
-dados[[5]][dados[[5]]=="boaa vist"] = "Boa Vista"
-dados[[5]] = factor(dados[[5]])
-freq(dados[[5]])
-
 #tabulacoes
-idade.t.test = t.test(meio$Qual.é.a.sua.idade.~meio$Que.meio.você.mais.usa.para.ouvir.música.)
-idade.t.test
-names(idade.t.test)
-idade.t.test$p.value
-ggplot(data=meio, aes(x=Que.meio.você.mais.usa.para.ouvir.música., y=Qual.é.a.sua.idade.))+
+meio <- dados[dados$meio.musica == "Mídias Sociais (internet)" | dados$meio.musica == "Rádio",]
+ggplot(data=meio, aes(x=meio.musica, y=Qual.é.a.sua.idade.))+
   geom_boxplot()+labs(title="Médias de idade", x="Meio", y="Idade")+
-  annotate("text", x=1.5, y=55, label="Teste t (p value) = 0.027", size=4.5)+
   annotate("text", x=1, y=27.6, label="27.1", size=4.5)+
   annotate("text", x=2, y=35.5, label="33.9", size=4.5)
