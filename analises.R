@@ -261,9 +261,9 @@ ouvem.radio[[12]][ouvem.radio[[12]]=="transamerica"] = "Transamérica"
 ouvem.radio[[12]] = factor(ouvem.radio[[12]])
 freq(ouvem.radio[[12]])
 #=====================================================
-ggplot(data=ouvem.radio, aes(ouvem.radio[[12]]))+geom_histogram()+
-  labs(title="Qual estação você mais escuta?", x="", y="")+
-  theme(axis.text.x = element_text(angle=45, hjust=1))
+ggplot(data=ouvem.radio, aes(reorder(ouvem.radio[[12]], ouvem.radio[[12]], length)))+
+  geom_bar()+labs(title="Qual estação você mais escuta?", x="", y="")+
+  coord_flip()
 
 
 freq(ouvem.radio[[13]]) # em quais horarios
