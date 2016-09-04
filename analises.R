@@ -193,7 +193,8 @@ dados[[9]][dados[[9]]=="SPOTIFY"] = "Spotify"
 dados[[9]] = factor(dados[[9]])
 freq(dados[[9]])
 #=====================================================
-ggplot(data=dados, aes(x=reorder(dados[[9]], dados[[9]], length)))+geom_bar()+
+names(dados)[9] <- "meio.musica"
+ggplot(data=dados, aes(x=reorder(meio.musica, meio.musica, length)))+geom_bar()+
   labs(title="Que meio você mais usa para ouvir música?", y="", x="")+
   coord_flip()
 
